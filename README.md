@@ -1,8 +1,8 @@
 
-<H3>ENTER YOUR NAME</H3>
-<H3>ENTER YOUR REGISTER NO.</H3>
+<H3>ENTER YOUR NAME : ALIYA SHEEMA </H3>
+<H3>ENTER YOUR REGISTER NO. : 212223230011 </H3>
 <H3>EX. NO.4</H3>
-<H3>DATE:</H3>
+<H3>DATE : 30.09.2025</H3>
 <H1 ALIGN =CENTER>Implementation of MLP with Backpropagation for Multiclassification</H1>
 <H3>Aim:</H3>
 To implement a Multilayer Perceptron for Multi classification
@@ -114,13 +114,74 @@ Normalize our dataset.
 
 8. Finally, call the functions confusion_matrix(), and the classification_report() in order to evaluate the performance of our classifier.
 
-<H3>Program:</H3> 
+<H3>Program :</H3> 
 
-Insert your code here
+```
+import pandas as pd
+import sklearn
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+import seaborn as sns
 
-<H3>Output:</H3>
+# Load the Penguins dataset
+penguins = sns.load_dataset("penguins").dropna()
 
-Show your results here
+# Prepare features (X) and labels (y)
+X = penguins[['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']]
+y = penguins['species']   # <-- keep as Series first
 
-<H3>Result:</H3>
+# Display sample data
+print("Features (first 5 rows):")
+print(X.head())
+print("\nLabels (first 5 rows):")
+print(y.head())
+
+# Show unique classes
+print("\nUnique classes in the dataset:")
+print(y.unique())
+
+# Convert categorical labels to numerical values
+le = preprocessing.LabelEncoder()
+y = le.fit_transform(y)   # <-- now y is a NumPy array of length 333
+print("\nEncoded labels (first 5 rows):")
+print(y[:5])
+
+# Split data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+
+# Standardize features
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_train = scaler.transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Create and train Multi-layer Perceptron classifier
+mlp = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=1000)
+mlp.fit(X_train, y_train)
+
+# Make predictions
+predictions = mlp.predict(X_test)
+print("\nModel predictions:")
+print(predictions)
+
+# Evaluate model performance
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, predictions))
+print("\nClassification Report:")
+print(classification_report(y_test, predictions))
+```
+
+
+
+<H3>Output :</H3>
+
+<img width="639" height="422" alt="image" src="https://github.com/user-attachments/assets/86f234c3-ab11-4cea-a691-faca775c213c" />
+
+<img width="595" height="279" alt="image" src="https://github.com/user-attachments/assets/d774c22a-0d0d-44b2-a0f7-ceeceb5caec8" />
+
+
+<H3>Result :</H3>
 Thus, MLP is implemented for multi-classification using python.
